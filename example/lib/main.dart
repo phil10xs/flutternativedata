@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -19,6 +21,8 @@ class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   num _batteryLevel = 0;
   final _flutternativedataPlugin = Flutternativedata();
+  Map<String, dynamic>? _deviceInfo;
+  Map<String, dynamic>? _memoryInfo;
 
   @override
   void initState() {
@@ -30,6 +34,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     String platformVersion;
     num batteryLevel;
+    Map<String, dynamic>? deviceInfo;
+    Map<String, dynamic>? memoryInfo;
 
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
@@ -37,7 +43,10 @@ class _MyAppState extends State<MyApp> {
       platformVersion = await _flutternativedataPlugin.getPlatformVersion() ??
           'Unknown platform version';
       batteryLevel = await _flutternativedataPlugin.getBatteryLevel() ?? 0;
+      _deviceInfo = await _flutternativedataPlugin.getDeviceInfo() ?? {};
+      _memoryInfo = await _flutternativedataPlugin.getMemoryInfo() ?? {};
     } on PlatformException {
+      log('data $_deviceInfo $memoryInfo');
       platformVersion = 'Failed to get platform version.';
       batteryLevel = 0;
     }
@@ -50,7 +59,11 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _platformVersion = platformVersion;
       _batteryLevel = batteryLevel;
+      _deviceInfo = deviceInfo;
+      _memoryInfo = memoryInfo;
     });
+
+    log('data $_deviceInfo $memoryInfo');
   }
 
   @override
@@ -65,6 +78,14 @@ class _MyAppState extends State<MyApp> {
             children: [
               Text('Running on: $_platformVersion\n'),
               Text('Battery level: $_batteryLevel\n'),
+              if (_deviceInfo != null)
+                ..._deviceInfo!.entries.map(
+                  (entry) => Text('${entry.key}: ${entry.value}\n'),
+                ),
+              if (_memoryInfo != null)
+                ..._memoryInfo!.entries.map(
+                  (entry) => Text('${entry.key}: ${entry.value}\n'),
+                ),
             ],
           ),
         ),
