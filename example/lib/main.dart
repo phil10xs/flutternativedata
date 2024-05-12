@@ -21,8 +21,9 @@ class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
   num _batteryLevel = 0;
   final _flutternativedataPlugin = Flutternativedata();
-  Map<String, dynamic>? _deviceInfo;
-  Map<String, dynamic>? _memoryInfo;
+  // Map<Object?, Object?>
+  Map<Object?, Object?>? _deviceInfo;
+  Map<Object?, Object?>? _memoryInfo;
 
   @override
   void initState() {
@@ -34,8 +35,8 @@ class _MyAppState extends State<MyApp> {
   Future<void> initPlatformState() async {
     String platformVersion;
     num batteryLevel;
-    Map<String, dynamic>? deviceInfo;
-    Map<String, dynamic>? memoryInfo;
+    Map<Object?, Object?>? deviceInfo;
+    Map<Object?, Object?>? memoryInfo;
 
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
@@ -43,10 +44,11 @@ class _MyAppState extends State<MyApp> {
       platformVersion = await _flutternativedataPlugin.getPlatformVersion() ??
           'Unknown platform version';
       batteryLevel = await _flutternativedataPlugin.getBatteryLevel() ?? 0;
-      // _deviceInfo = await _flutternativedataPlugin.getDeviceInfo() ?? {};
-      // _memoryInfo = await _flutternativedataPlugin.getMemoryInfo() ?? {};
+      _deviceInfo = await _flutternativedataPlugin.getDeviceInfo() ?? {};
+      _memoryInfo = await _flutternativedataPlugin.getMemoryInfo() ?? {};
     } on PlatformException catch (e) {
       log('error $e');
+
       platformVersion = 'Failed to get platform version.';
       batteryLevel = 0;
     }
@@ -59,8 +61,8 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _platformVersion = platformVersion;
       _batteryLevel = batteryLevel;
-      _deviceInfo = deviceInfo;
-      _memoryInfo = memoryInfo;
+      _deviceInfo = deviceInfo ?? {};
+      _memoryInfo = memoryInfo ?? {};
     });
 
     log('data $_deviceInfo $_memoryInfo $_batteryLevel $_platformVersion');

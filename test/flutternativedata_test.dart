@@ -14,7 +14,7 @@ class MockFlutternativedataPlatform
   Future<num?> getBatteryLevel() => Future.value(21);
 
   @override
-  Future<Map<String, dynamic>?> getDeviceInfo() => Future.value({
+  Future<Map<Object?, Object?>> getDeviceInfo() => Future.value({
         'model': 'MockDevice',
         'manufacturer': 'MockManufacturer',
         'osVersion': 'MockOS',

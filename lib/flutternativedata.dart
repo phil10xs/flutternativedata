@@ -12,20 +12,20 @@ class Flutternativedata {
     return FlutternativedataPlatform.instance.getBatteryLevel();
   }
 
-  Future<Map<String, dynamic>?> getDeviceInfo() async {
+  Future<Map<Object?, Object?>?> getDeviceInfo() async {
     try {
-      final Map<String, dynamic>? deviceInfo =
-          await FlutternativedataPlatform.instance.getDeviceInfo();
+      final Map<Object?, Object?> deviceInfo =
+          await FlutternativedataPlatform.instance.getDeviceInfo() ?? {};
       return deviceInfo;
     } on PlatformException catch (e) {
       return {"error": "Failed to get device info: '${e.message}'."};
     }
   }
 
-  Future<Map<String, dynamic>?> getMemoryInfo() async {
+  Future<Map<Object?, Object?>?> getMemoryInfo() async {
     try {
-      final Map<String, dynamic>? memoryInfo =
-          await FlutternativedataPlatform.instance.getMemoryInfo();
+      final Map<Object?, Object?> memoryInfo =
+          await FlutternativedataPlatform.instance.getMemoryInfo() ?? {};
       return memoryInfo;
     } on PlatformException catch (e) {
       return {"error": "Failed to get device info: '${e.message}'."};
