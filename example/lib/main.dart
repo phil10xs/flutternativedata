@@ -43,10 +43,10 @@ class _MyAppState extends State<MyApp> {
       platformVersion = await _flutternativedataPlugin.getPlatformVersion() ??
           'Unknown platform version';
       batteryLevel = await _flutternativedataPlugin.getBatteryLevel() ?? 0;
-      _deviceInfo = await _flutternativedataPlugin.getDeviceInfo() ?? {};
-      _memoryInfo = await _flutternativedataPlugin.getMemoryInfo() ?? {};
-    } on PlatformException {
-      log('data $_deviceInfo $memoryInfo');
+      // _deviceInfo = await _flutternativedataPlugin.getDeviceInfo() ?? {};
+      // _memoryInfo = await _flutternativedataPlugin.getMemoryInfo() ?? {};
+    } on PlatformException catch (e) {
+      log('error $e');
       platformVersion = 'Failed to get platform version.';
       batteryLevel = 0;
     }
@@ -63,7 +63,7 @@ class _MyAppState extends State<MyApp> {
       _memoryInfo = memoryInfo;
     });
 
-    log('data $_deviceInfo $memoryInfo');
+    log('data $_deviceInfo $_memoryInfo $_batteryLevel $_platformVersion');
   }
 
   @override
