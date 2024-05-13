@@ -23,8 +23,7 @@ class MethodChannelFlutternativedata extends FlutternativedataPlatform {
 
   @override
   Future<Map<Object?, Object?>?> getDeviceInfo() async {
-    return await methodChannel
-        .invokeMethod<Map<Object?, Object?>>('getDeviceInfo');
+    return await methodChannel.invokeMethod<dynamic>('getDeviceInfo');
   }
 
   @override

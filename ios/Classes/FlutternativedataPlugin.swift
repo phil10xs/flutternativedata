@@ -1,6 +1,4 @@
 import Flutter
-import flutternativedata
-
 import UIKit
 
 public class FlutternativedataPlugin: NSObject, FlutterPlugin {
@@ -20,9 +18,9 @@ public class FlutternativedataPlugin: NSObject, FlutterPlugin {
                   let batteryLevelPercentage = Int(batteryLevel * 100)
                   result(batteryLevelPercentage)
               case "getDeviceInfo":
-          if let deviceInfo = FlutternativedataPluginObjc.getDeviceInfo() as? [String: Any] {
-              result(deviceInfo)
-          }
+            let deviceInfo = getDeviceInfo()
+               result(deviceInfo)
+
               case "getMemoryInfo":
                   let memoryInfo = getMemoryInfo()
                   result(memoryInfo)

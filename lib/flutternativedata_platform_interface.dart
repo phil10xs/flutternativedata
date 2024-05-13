@@ -27,7 +27,7 @@ abstract class FlutternativedataPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  getBatteryLevel() {
+  Future<num?> getBatteryLevel() {
     throw UnimplementedError('getBatteryLevel() has not been implemented.');
   }
 
