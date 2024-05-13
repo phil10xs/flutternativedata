@@ -20,4 +20,15 @@ class MethodChannelFlutternativedata extends FlutternativedataPlatform {
   Future<num?> getBatteryLevel() {
     return methodChannel.invokeMethod<num?>('getBatteryLevel');
   }
+
+  @override
+  Future<Map<Object?, Object?>?> getDeviceInfo() async {
+    return await methodChannel
+        .invokeMethod<Map<Object?, Object?>>('getDeviceInfo');
+  }
+
+  @override
+  Future<Map<Object?, Object?>?> getMemoryInfo() {
+    return methodChannel.invokeMethod<Map<Object?, Object?>>('getMemoryInfo');
+  }
 }
