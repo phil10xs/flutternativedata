@@ -14,7 +14,7 @@ class Flutternativedata {
 
   Future<Map<Object?, Object?>?> getDeviceInfo() async {
     try {
-      final Map<Object?, Object?> deviceInfo =
+      final dynamic deviceInfo =
           await FlutternativedataPlatform.instance.getDeviceInfo() ?? {};
       return deviceInfo;
     } on PlatformException catch (e) {
