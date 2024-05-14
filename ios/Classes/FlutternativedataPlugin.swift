@@ -2,43 +2,66 @@ import Flutter
 import UIKit
 
 public class FlutternativedataPlugin: NSObject, FlutterPlugin {
-  public static func register(with registrar: FlutterPluginRegistrar) {
-    let channel = FlutterMethodChannel(name: "flutternativedata", binaryMessenger: registrar.messenger())
-    let instance = FlutternativedataPlugin()
-    registrar.addMethodCallDelegate(instance, channel: channel)
-  }
-
-  public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
-      switch call.method {
-              case "getPlatformVersion":
-                  result("iOS " + UIDevice.current.systemVersion)
-              case "getBatteryLevel":
-                  UIDevice.current.isBatteryMonitoringEnabled = true
-                  let batteryLevel = UIDevice.current.batteryLevel
-                  let batteryLevelPercentage = Int(batteryLevel * 100)
-                  result(batteryLevelPercentage)
-              case "getDeviceInfo":
-            let deviceInfo = getDeviceInfo()
-               result(deviceInfo)
-
-              case "getMemoryInfo":
-                  let memoryInfo = getMemoryInfo()
-                  result(memoryInfo)
-              default:
-                  result(FlutterMethodNotImplemented)
-       }
-  }
     
-   private func getDeviceInfo() -> [String: Any] {
-            var deviceInfo = [String: Any]()
-            deviceInfo["deviceModel"] = UIDevice.current.model
-            deviceInfo["deviceName"] = UIDevice.current.name
-            deviceInfo["systemVersion"] = UIDevice.current.systemVersion
-            deviceInfo["localizedModel"] = UIDevice.current.localizedModel
-            deviceInfo["identifierForVendor"] = UIDevice.current.identifierForVendor?.uuidString
-            return deviceInfo
-    }
+    enum CallMethod {
+        case getPlatformVersion
+        case getBatteryLevel
+        case getDeviceInfo
+        case getMemoryInfo
         
+        public var rawValue: String {
+            switch self {
+            case .getPlatformVersion:
+                "getPlatformVersion"
+            case .getBatteryLevel:
+                "getBatteryLevel"
+            case .getDeviceInfo:
+                "getDeviceInfo"
+            case .getMemoryInfo:
+                "getMemoryInfo"
+            }
+        }
+    }
+    
+    public static func register(with registrar: FlutterPluginRegistrar) {
+        let channel = FlutterMethodChannel(name: "flutternativedata", binaryMessenger: registrar.messenger())
+        let instance = FlutternativedataPlugin()
+        registrar.addMethodCallDelegate(instance, channel: channel)
+    }
+    
+    /// Called if this plugin has been registered to receive `FlutterMethodCall`s.
+    /// - Parameters:
+    ///   - call: The method call command object.
+    ///   - result: A callback for submitting the result of the call.
+    public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+        let callMethod = CallMethod.self
+        switch call.method {
+        case callMethod.getPlatformVersion.rawValue:
+            result("iOS " + UIDevice.current.systemVersion)
+        case callMethod.getBatteryLevel.rawValue:
+            UIDevice.current.isBatteryMonitoringEnabled = true
+            let batteryLevel = UIDevice.current.batteryLevel
+            let batteryLevelPercentage = Int(batteryLevel * 100)
+            result(batteryLevelPercentage)
+        case callMethod.getDeviceInfo.rawValue:
+            result(getDeviceInfo())
+        case callMethod.getMemoryInfo.rawValue:
+            result(getMemoryInfo())
+        default:
+            result(FlutterMethodNotImplemented)
+        }
+    }
+    
+    private func getDeviceInfo() -> [String: Any] {
+        var deviceInfo = [String: Any]()
+        deviceInfo["deviceModel"] = UIDevice.current.model
+        deviceInfo["deviceName"] = UIDevice.current.name
+        deviceInfo["systemVersion"] = UIDevice.current.systemVersion
+        deviceInfo["localizedModel"] = UIDevice.current.localizedModel
+        deviceInfo["identifierForVendor"] = UIDevice.current.identifierForVendor?.uuidString
+        return deviceInfo
+    }
+    
     private func getMemoryInfo() -> [String: Any] {
         var memoryInfo = [String: Any]()
         
@@ -46,7 +69,6 @@ public class FlutternativedataPlugin: NSObject, FlutterPlugin {
         // Get total memory
         let totalMemory = ProcessInfo.processInfo.physicalMemory
         memoryInfo["totalMemory"] = totalMemory
-
         
         // Get available memory
         var pageSize: vm_size_t = 0
@@ -67,7 +89,6 @@ public class FlutternativedataPlugin: NSObject, FlutterPlugin {
             memoryInfo["availableMemory"] = "N/A"
             memoryInfo["usedMemory"] = "N/A"
         }
-        
         return memoryInfo
     }
 }
