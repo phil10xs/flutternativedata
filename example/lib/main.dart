@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:flutternativedata/entities/fn_device_info.dart';
+import 'package:flutternativedata/entities/fn_memory_info.dart';
+import 'package:flutternativedata/entities/fn_package_info.dart';
 import 'package:flutternativedata/flutternativedata.dart';
 
 void main() {
@@ -18,9 +21,9 @@ class _MyAppState extends State<MyApp> {
   String platformVersion = 'Unknown';
   num batteryLevel = 0;
   final _flutternativedataPlugin = Flutternativedata();
-  Map<Object?, Object?>? deviceInfo;
-  Map<Object?, Object?>? memoryInfo;
-  Map<Object?, Object?>? packageInfo;
+  FNDeviceInfo? fnDeviceInfo;
+  FNMemoryInfo? fnMemoryInfo;
+  FNPackageInfo? fnPackageInfo;
 
   @override
   void initState() {
@@ -36,9 +39,9 @@ class _MyAppState extends State<MyApp> {
       platformVersion = await _flutternativedataPlugin.getPlatformVersion() ??
           'Unknown platform version';
       batteryLevel = await _flutternativedataPlugin.getBatteryLevel() ?? 0;
-      deviceInfo = await _flutternativedataPlugin.getDeviceInfo() ?? {};
-      memoryInfo = await _flutternativedataPlugin.getMemoryInfo() ?? {};
-      packageInfo = await _flutternativedataPlugin.getPackageInfo() ?? {};
+      fnDeviceInfo = await _flutternativedataPlugin.getDeviceInfo();
+      fnMemoryInfo = await _flutternativedataPlugin.getMemoryInfo();
+      fnPackageInfo = await _flutternativedataPlugin.getPackageInfo();
     } on PlatformException catch (_) {
       platformVersion = 'Failed to get platform version.';
       batteryLevel = 0;
@@ -53,25 +56,25 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('FN Plugin example app'),
         ),
         body: Center(
           child: Column(
             children: [
               Text('Running on: $platformVersion\n'),
               Text('Battery level: $batteryLevel\n'),
-              if (deviceInfo != null)
-                ...deviceInfo!.entries.map(
-                  (entry) => Text('${entry.key}: ${entry.value}\n'),
-                ),
-              if (memoryInfo != null)
-                ...memoryInfo!.entries.map(
-                  (entry) => Text('${entry.key}: ${entry.value}\n'),
-                ),
-              if (packageInfo != null)
-                ...packageInfo!.entries.map(
-                  (entry) => Text('${entry.key}: ${entry.value}\n'),
-                ),
+              if (fnDeviceInfo != null)
+                ...fnDeviceInfo!.toMap().entries.map(
+                      (entry) => Text('${entry.key}: ${entry.value}\n'),
+                    ),
+              if (fnMemoryInfo != null)
+                ...fnMemoryInfo!.toMap().entries.map(
+                      (entry) => Text('${entry.key}: ${entry.value}\n'),
+                    ),
+              if (fnPackageInfo != null)
+                ...fnPackageInfo!.toMap().entries.map(
+                      (entry) => Text('${entry.key}: ${entry.value}\n'),
+                    ),
             ],
           ),
         ),
