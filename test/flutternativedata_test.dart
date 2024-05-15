@@ -60,21 +60,21 @@ void main() {
   test('getDeviceInfo', () async {
     final deviceInfo = await flutternativedataPlugin.getDeviceInfo();
     expect(deviceInfo, isNotNull);
-    expect(deviceInfo!['model'], 'MockDevice');
-    expect(deviceInfo['manufacturer'], 'MockManufacturer');
-    expect(deviceInfo['osVersion'], 'MockOS');
+    expect(deviceInfo!.deviceModel, 'MockDevice');
+    expect(deviceInfo.deviceCountry, 'MockManufacturer');
+    expect(deviceInfo.deviceTimeZone, 'MockOS');
   });
 
   test('getPackageInfo', () async {
     final packageInfo = await flutternativedataPlugin.getPackageInfo();
     expect(packageInfo, isNotNull);
-    expect(packageInfo!['versionName'], 'com.example.app');
+    expect(packageInfo?.packageName, 'com.example.app');
   });
 
   test('getMemoryInfo', () async {
     final memoryInfo = await flutternativedataPlugin.getMemoryInfo();
     expect(memoryInfo, isNotNull);
-    expect(memoryInfo!['totalMemory'], 1024 * 1024 * 1024); // 1GB
-    expect(memoryInfo['availableMemory'], 512 * 1024 * 1024); // 512MB
+    expect(memoryInfo!.totalMemory, 1024 * 1024 * 1024); // 1GB
+    expect(memoryInfo.usedMemory, 512 * 1024 * 1024); // 512MB
   });
 }

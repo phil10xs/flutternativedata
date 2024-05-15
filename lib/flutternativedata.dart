@@ -1,5 +1,7 @@
-import 'package:flutter/services.dart';
-
+import 'package:flutternativedata/entities/fn_device_info.dart';
+import 'package:flutternativedata/entities/fn_memory_info.dart';
+import 'package:flutternativedata/entities/fn_package_info.dart';
+import 'package:flutternativedata/util/primitive_ext.dart';
 import 'flutternativedata_platform_interface.dart';
 
 class Flutternativedata {
@@ -7,38 +9,37 @@ class Flutternativedata {
     return FlutternativedataPlatform.instance.getPlatformVersion();
   }
 
-  /// récupération du niveau de la batterie
   Future<num?> getBatteryLevel() {
     return FlutternativedataPlatform.instance.getBatteryLevel();
   }
 
-  Future<Map<Object?, Object?>?> getDeviceInfo() async {
-    try {
-      final dynamic deviceInfo =
-          await FlutternativedataPlatform.instance.getDeviceInfo() ?? {};
-      return deviceInfo;
-    } on PlatformException catch (e) {
-      return {"error": "Failed to get device info: '${e.message}'."};
+  Future<FNDeviceInfo?> getDeviceInfo() async {
+    FNDeviceInfo? fnDeviceInfo;
+    final Map<Object?, Object?>? deviceInfo =
+        await FlutternativedataPlatform.instance.getDeviceInfo();
+    if (deviceInfo != null && deviceInfo.isNotEmpty) {
+      fnDeviceInfo = FNDeviceInfo.fromJson(deviceInfo.convertToDynamicMap());
     }
+    return fnDeviceInfo;
   }
 
-  Future<Map<Object?, Object?>?> getMemoryInfo() async {
-    try {
-      final Map<Object?, Object?> memoryInfo =
-          await FlutternativedataPlatform.instance.getMemoryInfo() ?? {};
-      return memoryInfo;
-    } on PlatformException catch (e) {
-      return {"error": "Failed to get device info: '${e.message}'."};
+  Future<FNMemoryInfo?> getMemoryInfo() async {
+    FNMemoryInfo? fnMemoryInfo;
+    final Map<Object?, Object?>? memoryInfo =
+        await FlutternativedataPlatform.instance.getMemoryInfo();
+    if (memoryInfo != null && memoryInfo.isNotEmpty) {
+      fnMemoryInfo = FNMemoryInfo.fromJson(memoryInfo.convertToDynamicMap());
     }
+    return fnMemoryInfo;
   }
 
-  Future<Map<Object?, Object?>?> getPackageInfo() async {
-    try {
-      final Map<Object?, Object?> memoryInfo =
-          await FlutternativedataPlatform.instance.getPackageInfo() ?? {};
-      return memoryInfo;
-    } on PlatformException catch (e) {
-      return {"error": "Failed to get device info: '${e.message}'."};
+  Future<FNPackageInfo?> getPackageInfo() async {
+    FNPackageInfo? fnPackageInfo;
+    final Map<Object?, Object?>? packageInfo =
+        await FlutternativedataPlatform.instance.getPackageInfo();
+    if (packageInfo != null && packageInfo.isNotEmpty) {
+      fnPackageInfo = FNPackageInfo.fromJson(packageInfo.convertToDynamicMap());
     }
+    return fnPackageInfo;
   }
 }

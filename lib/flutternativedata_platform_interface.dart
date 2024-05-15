@@ -1,5 +1,4 @@
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-
 import 'flutternativedata_method_channel.dart';
 
 abstract class FlutternativedataPlatform extends PlatformInterface {
