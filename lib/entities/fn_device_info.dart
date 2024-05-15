@@ -8,6 +8,13 @@ class FNDeviceInfo {
   final String? deviceName;
   final String? localizedModel;
   final String? deviceModel;
+  final String? deviceManufacturer;
+  final String? deviceBrand;
+  final String? deviceProduct;
+  final String? deviceHardware;
+  final String? deviceOSVersion;
+  final String? deviceSDKVersion;
+  final String? deviceID;
 
   FNDeviceInfo({
     required this.deviceType,
@@ -19,6 +26,13 @@ class FNDeviceInfo {
     required this.deviceName,
     required this.localizedModel,
     required this.deviceModel,
+    required this.deviceManufacturer,
+    required this.deviceBrand,
+    required this.deviceProduct,
+    required this.deviceHardware,
+    required this.deviceOSVersion,
+    required this.deviceSDKVersion,
+    required this.deviceID,
   });
 
   factory FNDeviceInfo.fromJson(Map<dynamic, dynamic> json) {
@@ -32,6 +46,13 @@ class FNDeviceInfo {
       deviceName: json['deviceName'],
       localizedModel: json['localizedModel'],
       deviceModel: json['deviceModel'],
+      deviceManufacturer: json['deviceManufacturer'],
+      deviceBrand: json['deviceBrand'],
+      deviceProduct: json['deviceProduct'],
+      deviceHardware: json['deviceHardware'],
+      deviceOSVersion: json['deviceOSVersion'],
+      deviceSDKVersion: json['deviceSDKVersion'].toString(),
+      deviceID: json['deviceID'],
     );
   }
 
@@ -46,6 +67,13 @@ class FNDeviceInfo {
       'deviceName': deviceName,
       'localizedModel': localizedModel,
       'deviceModel': deviceModel,
+      'deviceManufacturer': deviceManufacturer,
+      'deviceBrand': deviceBrand,
+      'deviceProduct': deviceProduct,
+      'deviceHardware': deviceHardware,
+      'deviceOSVersion': deviceOSVersion,
+      'deviceSDKVersion': deviceSDKVersion,
+      'deviceID': deviceID,
     };
   }
 }

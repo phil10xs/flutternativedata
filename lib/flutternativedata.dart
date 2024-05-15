@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutternativedata/entities/fn_device_info.dart';
 import 'package:flutternativedata/entities/fn_memory_info.dart';
 import 'package:flutternativedata/entities/fn_package_info.dart';
@@ -20,6 +22,7 @@ class Flutternativedata {
     if (deviceInfo != null && deviceInfo.isNotEmpty) {
       fnDeviceInfo = FNDeviceInfo.fromJson(deviceInfo.convertToDynamicMap());
     }
+    log(' fnDeviceInfo $deviceInfo');
     return fnDeviceInfo;
   }
 
@@ -30,6 +33,7 @@ class Flutternativedata {
     if (memoryInfo != null && memoryInfo.isNotEmpty) {
       fnMemoryInfo = FNMemoryInfo.fromJson(memoryInfo.convertToDynamicMap());
     }
+    log('fnMemoryInfo $memoryInfo');
     return fnMemoryInfo;
   }
 
@@ -40,6 +44,7 @@ class Flutternativedata {
     if (packageInfo != null && packageInfo.isNotEmpty) {
       fnPackageInfo = FNPackageInfo.fromJson(packageInfo.convertToDynamicMap());
     }
+    log('fnPackageInfo $packageInfo');
     return fnPackageInfo;
   }
 }
