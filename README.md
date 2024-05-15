@@ -1,14 +1,12 @@
 # flutternativedata
 
-A new Flutter plugin project that allows you get all native data in one place.
+A new Flutter plugin project that allows you get all native data in one place. 
 
-## Getting Started
+This project is written in Flutter, Swift and Kotlin.
+Introducing FlutterNativeData, the ultimate Flutter plugin for accessing vital native device information effortlessly. 
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that allows you get all native data in one place that includes platform-specific implementation code for Android and/or iOS.
+With methods like getPackageInfo(), getDeviceInfo(), getMemoryInfo(), and getPlatformVersion(), streamline your development process and enhance user experiences with seamless access to critical platform-specific data. Elevate your Flutter apps with FlutterNativeData – your all-in-one solution for native data retrieval.
 
-For help getting started with Flutter development, view the
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
 
