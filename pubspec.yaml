@@ -1,7 +1,7 @@
 name: flutternativedata
 description: A new Flutter plugin that allows you get all native data from one place
 version: 0.0.1
-homepage:
+homepage: https://pub.dev/packages/flutternativedata
 
 environment:
   sdk: '>=2.18.6 <3.0.0'
