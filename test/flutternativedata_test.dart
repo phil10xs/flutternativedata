@@ -21,6 +21,16 @@ class MockFlutternativedataPlatform
       });
 
   @override
+  Future<Map<Object?, Object?>?> getPackageInfo() {
+    final packageInfo = {
+      'versionName': '1.0.0',
+      'versionCode': '1',
+      'packageName': 'com.example.app',
+    };
+    return Future.value(packageInfo);
+  }
+
+  @override
   Future<Map<String, dynamic>?> getMemoryInfo() => Future.value({
         'totalMemory': 1024 * 1024 * 1024, // 1GB
         'availableMemory': 512 * 1024 * 1024, // 512MB
@@ -53,6 +63,12 @@ void main() {
     expect(deviceInfo!['model'], 'MockDevice');
     expect(deviceInfo['manufacturer'], 'MockManufacturer');
     expect(deviceInfo['osVersion'], 'MockOS');
+  });
+
+  test('getPackageInfo', () async {
+    final packageInfo = await flutternativedataPlugin.getPackageInfo();
+    expect(packageInfo, isNotNull);
+    expect(packageInfo!['versionName'], 'com.example.app');
   });
 
   test('getMemoryInfo', () async {

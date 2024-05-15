@@ -8,6 +8,7 @@ public class FlutternativedataPlugin: NSObject, FlutterPlugin {
         case getBatteryLevel
         case getDeviceInfo
         case getMemoryInfo
+        case getPackageInfo
         
         public var rawValue: String {
             switch self {
@@ -19,6 +20,8 @@ public class FlutternativedataPlugin: NSObject, FlutterPlugin {
                 "getDeviceInfo"
             case .getMemoryInfo:
                 "getMemoryInfo"
+            case .getPackageInfo:
+                "getPackageInfo"
             }
         }
     }
@@ -47,6 +50,8 @@ public class FlutternativedataPlugin: NSObject, FlutterPlugin {
             result(getDeviceInfo())
         case callMethod.getMemoryInfo.rawValue:
             result(getMemoryInfo())
+        case callMethod.getPackageInfo.rawValue:
+            result(getPackageInfo())
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -59,7 +64,24 @@ public class FlutternativedataPlugin: NSObject, FlutterPlugin {
         deviceInfo["systemVersion"] = UIDevice.current.systemVersion
         deviceInfo["localizedModel"] = UIDevice.current.localizedModel
         deviceInfo["identifierForVendor"] = UIDevice.current.identifierForVendor?.uuidString
+        deviceInfo["deviceType"] = UIDevice.current.userInterfaceIdiom == .phone ? "Phone" : "Tablet"
+          deviceInfo["deviceLanguage"] = Locale.preferredLanguages.first ?? "Unknown"
+          deviceInfo["deviceCountry"] = Locale.current.regionCode ?? "Unknown"
+          deviceInfo["deviceTimeZone"] = TimeZone.current.identifier
         return deviceInfo
+    }
+    
+    private func getPackageInfo() -> [String: Any]? {
+        guard let infoDictionary = Bundle.main.infoDictionary else {
+            return nil
+        }
+        
+        var packageInfo = [String: Any]()
+        packageInfo["versionName"] = infoDictionary["CFBundleShortVersionString"] as? String ?? "N/A"
+        packageInfo["versionCode"] = infoDictionary["CFBundleVersion"] as? String ?? "N/A"
+        packageInfo["packageName"] = Bundle.main.bundleIdentifier ?? "N/A"
+        
+        return packageInfo
     }
     
     private func getMemoryInfo() -> [String: Any] {

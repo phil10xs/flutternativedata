@@ -30,4 +30,9 @@ class MethodChannelFlutternativedata extends FlutternativedataPlatform {
   Future<Map<Object?, Object?>?> getMemoryInfo() {
     return methodChannel.invokeMethod<Map<Object?, Object?>>('getMemoryInfo');
   }
+
+  @override
+  Future<Map<Object?, Object?>?> getPackageInfo() {
+    return methodChannel.invokeMethod<Map<Object?, Object?>>('getPackageInfo');
+  }
 }
