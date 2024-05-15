@@ -57,19 +57,28 @@ public class FlutternativedataPlugin: NSObject, FlutterPlugin {
         }
     }
     
-    private func getDeviceInfo() -> [String: Any] {
-        var deviceInfo = [String: Any]()
-        deviceInfo["deviceModel"] = UIDevice.current.model
-        deviceInfo["deviceName"] = UIDevice.current.name
-        deviceInfo["systemVersion"] = UIDevice.current.systemVersion
-        deviceInfo["localizedModel"] = UIDevice.current.localizedModel
-        deviceInfo["identifierForVendor"] = UIDevice.current.identifierForVendor?.uuidString
-        deviceInfo["deviceType"] = UIDevice.current.userInterfaceIdiom == .phone ? "Phone" : "Tablet"
-          deviceInfo["deviceLanguage"] = Locale.preferredLanguages.first ?? "Unknown"
-          deviceInfo["deviceCountry"] = Locale.current.regionCode ?? "Unknown"
-          deviceInfo["deviceTimeZone"] = TimeZone.current.identifier
-        return deviceInfo
-    }
+  private func getDeviceInfo() -> [String: Any] {
+    var deviceInfo = [String: Any]()
+    deviceInfo["deviceModel"] = UIDevice.current.model
+    deviceInfo["deviceName"] = UIDevice.current.name
+    deviceInfo["systemVersion"] = UIDevice.current.systemVersion
+    deviceInfo["localizedModel"] = UIDevice.current.localizedModel
+    deviceInfo["identifierForVendor"] = UIDevice.current.identifierForVendor?.uuidString
+    deviceInfo["deviceType"] = UIDevice.current.userInterfaceIdiom == .phone ? "Phone" : "Tablet"
+    deviceInfo["deviceLanguage"] = Locale.preferredLanguages.first ?? "Unknown"
+    deviceInfo["deviceCountry"] = Locale.current.regionCode ?? "Unknown"
+    deviceInfo["deviceTimeZone"] = TimeZone.current.identifier
+    deviceInfo["deviceManufacturer"] = "Apple" // Added
+    deviceInfo["deviceBrand"] = "Apple" // Added
+    deviceInfo["deviceProduct"] = "iOS Device" // Added
+    deviceInfo["deviceHardware"] = "iOS Hardware" // Added
+    deviceInfo["deviceOSVersion"] = UIDevice.current.systemVersion // Updated
+    deviceInfo["deviceSDKVersion"] = UIDevice.current.systemVersion // Updated
+    deviceInfo["deviceID"] = UIDevice.current.identifierForVendor?.uuidString ?? "Unknown" // Updated
+    return deviceInfo
+}
+
+
     
     private func getPackageInfo() -> [String: Any]? {
         guard let infoDictionary = Bundle.main.infoDictionary else {

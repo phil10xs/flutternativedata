@@ -5,6 +5,9 @@ import android.content.pm.PackageManager
 import android.os.BatteryManager
 import android.os.Build
 import android.app.ActivityManager
+import java.util.Locale
+import java.util.TimeZone
+import android.provider.Settings
 
 import androidx.annotation.NonNull
 
@@ -105,13 +108,20 @@ private fun getDeviceInfo(): Map<String, Any> {
         if (context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
             "Phone"
         } else {
-            "Tablet"
+            "Phone"
         }
     } else {
         "Unknown"
     }
+    deviceInfoMap["localizedModel"] = Build.MODEL 
+    deviceInfoMap["deviceLanguage"] = Locale.getDefault().language // Added
+    deviceInfoMap["deviceCountry"] = Locale.getDefault().country // Added
+    deviceInfoMap["deviceTimeZone"] = TimeZone.getDefault().id // Added
+    deviceInfoMap["systemVersion"] = Build.VERSION.RELEASE // Updated
+    deviceInfoMap["identifierForVendor"] = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) // Updated
     return deviceInfoMap
 }
+
 
 private fun getMemoryInfo(): Map<String, Any>? {
     val memoryInfo = ActivityManager.MemoryInfo()
@@ -119,6 +129,7 @@ private fun getMemoryInfo(): Map<String, Any>? {
     val memoryInfoMap = mutableMapOf<String, Any>()
     memoryInfoMap["totalMemory"] = memoryInfo.totalMem
     memoryInfoMap["availableMemory"] = memoryInfo.availMem
+    memoryInfoMap["usedMemory"] = memoryInfo.totalMem - memoryInfo.availMem // Calculate used memory
     return memoryInfoMap
 }
 

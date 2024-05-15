@@ -56,26 +56,65 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('FN Plugin example app'),
+          title: const Text(
+            'FN Plugin example app',
+            style: TextStyle(fontWeight: FontWeight.w500),
+          ),
         ),
         body: Center(
-          child: Column(
-            children: [
-              Text('Running on: $platformVersion\n'),
-              Text('Battery level: $batteryLevel\n'),
-              if (fnDeviceInfo != null)
-                ...fnDeviceInfo!.toMap().entries.map(
-                      (entry) => Text('${entry.key}: ${entry.value}\n'),
-                    ),
-              if (fnMemoryInfo != null)
-                ...fnMemoryInfo!.toMap().entries.map(
-                      (entry) => Text('${entry.key}: ${entry.value}\n'),
-                    ),
-              if (fnPackageInfo != null)
-                ...fnPackageInfo!.toMap().entries.map(
-                      (entry) => Text('${entry.key}: ${entry.value}\n'),
-                    ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text('DeviceInfo',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    )),
+                if (fnDeviceInfo != null)
+                  ...fnDeviceInfo!.toMap().entries.map(
+                        (entry) => Text('${entry.key}: ${entry.value}\n'),
+                      ),
+                const Text('PlatformInfo',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    )),
+                Text('Running on: $platformVersion\n',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    )),
+                const Text('PackageInfo',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    )),
+                if (fnPackageInfo != null)
+                  ...fnPackageInfo!.toMap().entries.map(
+                        (entry) => Text('${entry.key}: ${entry.value}\n'),
+                      ),
+                const Text('BatteryInfo',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    )),
+                Text('Battery level: $batteryLevel\n',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    )),
+                const Text('MemoryInfo',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    )),
+                if (fnMemoryInfo != null)
+                  ...fnMemoryInfo!.toMap().entries.map(
+                        (entry) => Text('${entry.key}: ${entry.value}\n'),
+                      ),
+              ],
+            ),
           ),
         ),
       ),
