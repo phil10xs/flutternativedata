@@ -1,5 +1,5 @@
 package com.example.flutternativedata
-
+import android.Manifest
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.BatteryManager
@@ -57,6 +57,10 @@ class FlutternativedataPlugin: FlutterPlugin, MethodCallHandler {
         val deviceInfo = getDeviceInfo()
                 result.success(deviceInfo)
             }
+     "getPackageInfo" -> {
+        val packageInfo = getPackageInfo()
+                result.success(packageInfo)
+            }
       "getMemoryInfo" -> {
           val memoryInfo = getMemoryInfo()
                 result.success(memoryInfo)
@@ -67,7 +71,7 @@ class FlutternativedataPlugin: FlutterPlugin, MethodCallHandler {
     }
   }
 
- private fun getDeviceInfo(): Map<String, Any>? {
+ private fun getPackageInfo(): Map<String, Any>? {
     val infoMap = mutableMapOf<String, Any>()
     try {
         val packageInfo = packageManager.getPackageInfo(context.packageName, 0)
@@ -83,6 +87,30 @@ class FlutternativedataPlugin: FlutterPlugin, MethodCallHandler {
         return null
     }
     return infoMap
+}
+
+
+private fun getDeviceInfo(): Map<String, Any> {
+    val deviceInfoMap = mutableMapOf<String, Any>()
+    deviceInfoMap["deviceModel"] = Build.MODEL
+    deviceInfoMap["deviceManufacturer"] = Build.MANUFACTURER
+    deviceInfoMap["deviceBrand"] = Build.BRAND
+    deviceInfoMap["deviceName"] = Build.DEVICE
+    deviceInfoMap["deviceProduct"] = Build.PRODUCT
+    deviceInfoMap["deviceHardware"] = Build.HARDWARE
+    deviceInfoMap["deviceOSVersion"] = Build.VERSION.RELEASE
+    deviceInfoMap["deviceSDKVersion"] = Build.VERSION.SDK_INT
+    deviceInfoMap["deviceID"] = Build.ID
+    deviceInfoMap["deviceType"] = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (context.checkSelfPermission(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+            "Phone"
+        } else {
+            "Tablet"
+        }
+    } else {
+        "Unknown"
+    }
+    return deviceInfoMap
 }
 
 private fun getMemoryInfo(): Map<String, Any>? {

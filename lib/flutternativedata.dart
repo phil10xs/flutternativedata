@@ -31,4 +31,14 @@ class Flutternativedata {
       return {"error": "Failed to get device info: '${e.message}'."};
     }
   }
+
+  Future<Map<Object?, Object?>?> getPackageInfo() async {
+    try {
+      final Map<Object?, Object?> memoryInfo =
+          await FlutternativedataPlatform.instance.getPackageInfo() ?? {};
+      return memoryInfo;
+    } on PlatformException catch (e) {
+      return {"error": "Failed to get device info: '${e.message}'."};
+    }
+  }
 }

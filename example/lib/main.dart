@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:flutternativedata/flutternativedata.dart';
 
@@ -18,12 +15,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-  num _batteryLevel = 0;
+  String platformVersion = 'Unknown';
+  num batteryLevel = 0;
   final _flutternativedataPlugin = Flutternativedata();
-  // Map<Object?, Object?>
-  Map<Object?, Object?>? _deviceInfo;
-  Map<Object?, Object?>? _memoryInfo;
+  Map<Object?, Object?>? deviceInfo;
+  Map<Object?, Object?>? memoryInfo;
+  Map<Object?, Object?>? packageInfo;
 
   @override
   void initState() {
@@ -33,33 +30,22 @@ class _MyAppState extends State<MyApp> {
 
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
-    String platformVersion;
-    num batteryLevel;
-    Map<Object?, Object?>? deviceInfo;
-    Map<Object?, Object?>? memoryInfo;
-
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      _platformVersion = await _flutternativedataPlugin.getPlatformVersion() ??
+      platformVersion = await _flutternativedataPlugin.getPlatformVersion() ??
           'Unknown platform version';
-      _batteryLevel = await _flutternativedataPlugin.getBatteryLevel() ?? 0;
-      _deviceInfo = await _flutternativedataPlugin.getDeviceInfo() ?? {};
-      _memoryInfo = await _flutternativedataPlugin.getMemoryInfo() ?? {};
-    } on PlatformException catch (e) {
+      batteryLevel = await _flutternativedataPlugin.getBatteryLevel() ?? 0;
+      deviceInfo = await _flutternativedataPlugin.getDeviceInfo() ?? {};
+      memoryInfo = await _flutternativedataPlugin.getMemoryInfo() ?? {};
+      packageInfo = await _flutternativedataPlugin.getPackageInfo() ?? {};
+    } on PlatformException catch (_) {
       platformVersion = 'Failed to get platform version.';
       batteryLevel = 0;
     }
     if (!mounted) return;
 
-    setState(() {
-      platformVersion = _platformVersion;
-      batteryLevel = _batteryLevel;
-      deviceInfo = _deviceInfo;
-      memoryInfo = _memoryInfo;
-    });
-
-    log('data $_deviceInfo $_memoryInfo $_batteryLevel $_platformVersion');
+    setState(() {});
   }
 
   @override
@@ -72,14 +58,18 @@ class _MyAppState extends State<MyApp> {
         body: Center(
           child: Column(
             children: [
-              Text('Running on: $_platformVersion\n'),
-              Text('Battery level: $_batteryLevel\n'),
-              if (_deviceInfo != null)
-                ..._deviceInfo!.entries.map(
+              Text('Running on: $platformVersion\n'),
+              Text('Battery level: $batteryLevel\n'),
+              if (deviceInfo != null)
+                ...deviceInfo!.entries.map(
                   (entry) => Text('${entry.key}: ${entry.value}\n'),
                 ),
-              if (_memoryInfo != null)
-                ..._memoryInfo!.entries.map(
+              if (memoryInfo != null)
+                ...memoryInfo!.entries.map(
+                  (entry) => Text('${entry.key}: ${entry.value}\n'),
+                ),
+              if (packageInfo != null)
+                ...packageInfo!.entries.map(
                   (entry) => Text('${entry.key}: ${entry.value}\n'),
                 ),
             ],

@@ -38,4 +38,8 @@ abstract class FlutternativedataPlatform extends PlatformInterface {
   Future<Map<Object?, Object?>?> getMemoryInfo() {
     throw UnimplementedError('getMemoryInfo() has not been implemented.');
   }
+
+  Future<Map<Object?, Object?>?> getPackageInfo() {
+    throw UnimplementedError('getMemoryInfo() has not been implemented.');
+  }
 }
