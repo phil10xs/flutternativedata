@@ -10,9 +10,9 @@ With methods like getPackageInfo(), getDeviceInfo(), getMemoryInfo(), and getPla
 
 Elevate your Flutter apps with FlutterNativeData – your all-in-one solution for native data retrieval.
 
-|             | Android | iOS   | macOS  | Web   |
-|-------------|---------|-------|--------|-------|
-| **Support** | SDK 16+ | 12.0+ | 10.14+ | Any\* |
+|             | Android | iOS   |
+|-------------|---------|-------|
+| **Support** | SDK 16+ | 12.0+ | 
 
 ![The example app running in Andriod](https://https://github.com/phil10xs/flutternativedata/tree/main/lib/FND-Plugin-Andriod.gif?raw=true)
 
