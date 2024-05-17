@@ -14,10 +14,11 @@ Elevate your Flutter apps with FlutterNativeData – your all-in-one solution fo
 |-------------|---------|-------|
 | **Support** | SDK 16+ | 12.0+ | 
 
-# Example FDN Plugin Data
-
+## Example FDN Plugin Data
+### Android
 ![The example app running in Andriod](https://github.com/phil10xs/flutternativedata/blob/main/lib/demo/FND-Plugin-Android.gif?raw=true)
 
+### iOS
 ![The example app running in iOS](https://github.com/phil10xs/flutternativedata/blob/main/lib/demo/FND-Plugin-iOS.gif?raw=true)
 
 
