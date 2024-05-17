@@ -76,6 +76,11 @@ class FlutternativedataPlugin: FlutterPlugin, MethodCallHandler {
 
  private fun getPackageInfo(): Map<String, Any>? {
     val infoMap = mutableMapOf<String, Any>()
+     val packageManager = context.packageManager
+     val packageInfo = packageManager.getPackageInfo(context.packageName, 0)
+    val applicationInfo = packageManager.getApplicationInfo(context.packageName, 0)
+    val appName = packageManager.getApplicationLabel(applicationInfo).toString()
+
     try {
         val packageInfo = packageManager.getPackageInfo(context.packageName, 0)
         infoMap["versionName"] = packageInfo.versionName
@@ -85,6 +90,7 @@ class FlutternativedataPlugin: FlutterPlugin, MethodCallHandler {
             packageInfo.versionCode
         }
         infoMap["packageName"] = context.packageName
+        infoMap["appName"] =  appName 
     } catch (e: PackageManager.NameNotFoundException) {
         // Handle exception if package information is not found
         return null
@@ -118,6 +124,7 @@ private fun getDeviceInfo(): Map<String, Any> {
     deviceInfoMap["deviceCountry"] = Locale.getDefault().country // Added
     deviceInfoMap["deviceTimeZone"] = TimeZone.getDefault().id // Added
     deviceInfoMap["systemVersion"] = Build.VERSION.RELEASE // Updated
+    deviceInfoMap["deviceIMEI"] = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) // Updated
     deviceInfoMap["identifierForVendor"] = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) // Updated
     return deviceInfoMap
 }

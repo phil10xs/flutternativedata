@@ -2,6 +2,7 @@ class FNDeviceInfo {
   final String? deviceType;
   final String? deviceLanguage;
   final String? identifierForVendor;
+  final String? deviceIMEI;
   final String? systemVersion;
   final String? deviceCountry;
   final String? deviceTimeZone;
@@ -20,6 +21,7 @@ class FNDeviceInfo {
     required this.deviceType,
     required this.deviceLanguage,
     required this.identifierForVendor,
+    required this.deviceIMEI,
     required this.systemVersion,
     required this.deviceCountry,
     required this.deviceTimeZone,
@@ -40,6 +42,7 @@ class FNDeviceInfo {
       deviceType: json['deviceType'],
       deviceLanguage: json['deviceLanguage'],
       identifierForVendor: json['identifierForVendor'],
+      deviceIMEI: json['deviceIMEI'],
       systemVersion: json['systemVersion'],
       deviceCountry: json['deviceCountry'],
       deviceTimeZone: json['deviceTimeZone'],
@@ -61,6 +64,7 @@ class FNDeviceInfo {
       'deviceType': deviceType,
       'deviceLanguage': deviceLanguage,
       'identifierForVendor': identifierForVendor,
+      'deviceIMEI': deviceIMEI,
       'systemVersion': systemVersion,
       'deviceCountry': deviceCountry,
       'deviceTimeZone': deviceTimeZone,
