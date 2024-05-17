@@ -64,6 +64,7 @@ public class FlutternativedataPlugin: NSObject, FlutterPlugin {
     deviceInfo["systemVersion"] = UIDevice.current.systemVersion
     deviceInfo["localizedModel"] = UIDevice.current.localizedModel
     deviceInfo["identifierForVendor"] = UIDevice.current.identifierForVendor?.uuidString
+    deviceInfo["deviceIMEI"] = UIDevice.current.identifierForVendor?.uuidString
     deviceInfo["deviceType"] = UIDevice.current.userInterfaceIdiom == .phone ? "Phone" : "Tablet"
     deviceInfo["deviceLanguage"] = Locale.preferredLanguages.first ?? "Unknown"
     deviceInfo["deviceCountry"] = Locale.current.regionCode ?? "Unknown"
@@ -89,6 +90,8 @@ public class FlutternativedataPlugin: NSObject, FlutterPlugin {
         packageInfo["versionName"] = infoDictionary["CFBundleShortVersionString"] as? String ?? "N/A"
         packageInfo["versionCode"] = infoDictionary["CFBundleVersion"] as? String ?? "N/A"
         packageInfo["packageName"] = Bundle.main.bundleIdentifier ?? "N/A"
+        packageInfo["appName"] = infoDictionary["CFBundleDisplayName"] as? String ?? infoDictionary["CFBundleName"] as? String ?? "N/A"
+
         
         return packageInfo
     }
