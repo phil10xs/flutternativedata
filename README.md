@@ -14,9 +14,11 @@ Elevate your Flutter apps with FlutterNativeData – your all-in-one solution fo
 |-------------|---------|-------|
 | **Support** | SDK 16+ | 12.0+ | 
 
-![The example app running in Andriod](https://https://github.com/phil10xs/flutternativedata/tree/main/lib/FND-Plugin-Andriod.gif?raw=true)
+![The example app running in Andriod](https://https://github.com/phil10xs/flutternativedata/tree/main/lib/demo/FND-Plugin-Andriod.gif?raw=true)
 
-![The example app running in iOS](https://https://github.com/phil10xs/flutternativedata/tree/main/lib/FND-Plugin-iOS.gif?raw=true)
+![The example app running in iOS](https://https://github.com/phil10xs/flutternativedata/tree/main/lib/demo/FND-Plugin-iOS.gif?raw=true)
+
+![The example app running in iOS](https://github.com/flutter/packages/blob/main/packages/video_player/video_player/doc/demo_ipod.gif?raw=true)
 
 
 ## Example
