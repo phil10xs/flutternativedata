@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
                       fontSize: 15,
                     )),
                 Text('Running on: $platformVersion\n',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 15,
                     )),
@@ -100,7 +100,7 @@ class _MyAppState extends State<MyApp> {
                       fontSize: 15,
                     )),
                 Text('Battery level: $batteryLevel\n',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 15,
                     )),

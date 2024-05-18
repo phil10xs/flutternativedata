@@ -1,3 +1,3 @@
-## 0.0.3
+## 1.0.0
 
-* TODO: Add more documentation.
+* TODO: plugin now open source for collaboration, PRs, Issues and Support.
