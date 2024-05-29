@@ -1,4 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutternativedata/entities/fn_device_info.dart';
+import 'package:flutternativedata/entities/fn_memory_info.dart';
+import 'package:flutternativedata/entities/fn_package_info.dart';
 import 'package:flutternativedata/flutternativedata.dart';
 import 'package:flutternativedata/flutternativedata_platform_interface.dart';
 import 'package:flutternativedata/flutternativedata_method_channel.dart';
@@ -61,6 +64,7 @@ void main() {
   test('getDeviceInfo', () async {
     final deviceInfo = await flutternativedataPlugin.getDeviceInfo();
     expect(deviceInfo, isNotNull);
+    expect(deviceInfo, isInstanceOf<FNDeviceInfo>());
     expect(deviceInfo?.deviceModel, isNotEmpty);
     expect(deviceInfo!.deviceModel, 'MockDevice');
     expect(deviceInfo.deviceManufacturer, 'MockManufacturer');
@@ -70,15 +74,18 @@ void main() {
   test('getPackageInfo', () async {
     final packageInfo = await flutternativedataPlugin.getPackageInfo();
     expect(packageInfo, isNotNull);
+    expect(packageInfo, isInstanceOf<FNPackageInfo>());
     expect(packageInfo?.packageName, isNotEmpty);
     expect(packageInfo?.packageName, 'com.example.app');
   });
 
   test('getMemoryInfo', () async {
-    final memoryInfo = await flutternativedataPlugin.getMemoryInfo();
+    final memoryInfoI = await flutternativedataPlugin.getMemoryInfo();
+    final memoryInfo = FNMemoryInfo.fromJson(memoryInfoI?.toMap() ?? {});
     expect(memoryInfo, isNotNull);
-    expect(memoryInfo?.totalMemory, 1024); // 1GB
-    expect(memoryInfo?.availableMemory, 512); //
-    expect(memoryInfo?.usedMemory, 512); // 512MB
+    expect(memoryInfo, isInstanceOf<FNMemoryInfo>());
+    expect(memoryInfo.totalMemory, 1024); // 1GB
+    expect(memoryInfo.availableMemory, 512); //
+    expect(memoryInfo.usedMemory, 512); // 512MB
   });
 }
