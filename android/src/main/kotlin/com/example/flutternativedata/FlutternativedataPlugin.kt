@@ -17,6 +17,20 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
 
+enum class Method(val methodName: String) {
+    GET_BATTERY_LEVEL("getBatteryLevel"),
+    GET_PLATFORM_VERSION("getPlatformVersion"),
+    GET_DEVICE_INFO("getDeviceInfo"),
+    GET_PACKAGE_INFO("getPackageInfo"),
+    GET_MEMORY_INFO("getMemoryInfo");
+
+    companion object {
+        fun fromMethodName(methodName: String): Method? {
+            return values().find { it.methodName == methodName }
+        }
+    }
+}
+
 /** FlutternativedataPlugin */
 class FlutternativedataPlugin: FlutterPlugin, MethodCallHandler {
   /// The MethodChannel that will the communication between Flutter and native Android
@@ -43,28 +57,28 @@ class FlutternativedataPlugin: FlutterPlugin, MethodCallHandler {
   }
 
   override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
-    when (call.method) {
-      "getBatteryLevel" -> {
+    when (Method.fromMethodName(call.method)) {
+        Method.GET_BATTERY_LEVEL  -> {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
           result.success(batteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY));
         } else {
           result.error("WRONG_VERSION", "android version not supported", "");
         }
       }
-      "getPlatformVersion" -> {
+        Method.GET_PLATFORM_VERSION  -> {
         // Implement the logic to retrieve the platform version
         val version = "Android ${android.os.Build.VERSION.RELEASE}"
         result.success(version)
       }
-      "getDeviceInfo" -> {
+        Method.GET_DEVICE_INFO  -> {
         val deviceInfo = getDeviceInfo()
                 result.success(deviceInfo)
             }
-     "getPackageInfo" -> {
+        Method.GET_PACKAGE_INFO -> {
         val packageInfo = getPackageInfo()
                 result.success(packageInfo)
             }
-      "getMemoryInfo" -> {
+        Method.GET_MEMORY_INFO -> {
           val memoryInfo = getMemoryInfo()
                 result.success(memoryInfo)
             }
@@ -75,11 +89,11 @@ class FlutternativedataPlugin: FlutterPlugin, MethodCallHandler {
   }
 
  private fun getPackageInfo(): Map<String, Any>? {
-    val infoMap = mutableMapOf<String, Any>()
+     val infoMap = mutableMapOf<String, Any>()
      val packageManager = context.packageManager
      val packageInfo = packageManager.getPackageInfo(context.packageName, 0)
-    val applicationInfo = packageManager.getApplicationInfo(context.packageName, 0)
-    val appName = packageManager.getApplicationLabel(applicationInfo).toString()
+     val applicationInfo = packageManager.getApplicationInfo(context.packageName, 0)
+     val appName = packageManager.getApplicationLabel(applicationInfo).toString()
 
     try {
         val packageInfo = packageManager.getPackageInfo(context.packageName, 0)
@@ -144,3 +158,7 @@ private fun getMemoryInfo(): Map<String, Any>? {
     channel.setMethodCallHandler(null)
   }
 }
+
+
+
+

@@ -15,9 +15,9 @@ class MockFlutternativedataPlatform
 
   @override
   Future<Map<Object?, Object?>> getDeviceInfo() => Future.value({
-        'model': 'MockDevice',
-        'manufacturer': 'MockManufacturer',
-        'osVersion': 'MockOS',
+        'deviceModel': 'MockDevice',
+        'deviceManufacturer': 'MockManufacturer',
+        'deviceOSVersion': 'MockOS',
       });
 
   @override
@@ -31,9 +31,10 @@ class MockFlutternativedataPlatform
   }
 
   @override
-  Future<Map<String, dynamic>?> getMemoryInfo() => Future.value({
-        'totalMemory': 1024 * 1024 * 1024, // 1GB
-        'availableMemory': 512 * 1024 * 1024, // 512MB
+  Future<Map<Object?, Object?>?> getMemoryInfo() => Future.value({
+        'totalMemory': 1024, // 1GB
+        'availableMemory': 512,
+        'usedMemory': 512, // 512MB
       });
 }
 
@@ -60,21 +61,24 @@ void main() {
   test('getDeviceInfo', () async {
     final deviceInfo = await flutternativedataPlugin.getDeviceInfo();
     expect(deviceInfo, isNotNull);
+    expect(deviceInfo?.deviceModel, isNotEmpty);
     expect(deviceInfo!.deviceModel, 'MockDevice');
-    expect(deviceInfo.deviceCountry, 'MockManufacturer');
-    expect(deviceInfo.deviceTimeZone, 'MockOS');
+    expect(deviceInfo.deviceManufacturer, 'MockManufacturer');
+    expect(deviceInfo.deviceOSVersion, 'MockOS');
   });
 
   test('getPackageInfo', () async {
     final packageInfo = await flutternativedataPlugin.getPackageInfo();
     expect(packageInfo, isNotNull);
+    expect(packageInfo?.packageName, isNotEmpty);
     expect(packageInfo?.packageName, 'com.example.app');
   });
 
   test('getMemoryInfo', () async {
     final memoryInfo = await flutternativedataPlugin.getMemoryInfo();
     expect(memoryInfo, isNotNull);
-    expect(memoryInfo!.totalMemory, 1024 * 1024 * 1024); // 1GB
-    expect(memoryInfo.usedMemory, 512 * 1024 * 1024); // 512MB
+    expect(memoryInfo?.totalMemory, 1024); // 1GB
+    expect(memoryInfo?.availableMemory, 512); //
+    expect(memoryInfo?.usedMemory, 512); // 512MB
   });
 }

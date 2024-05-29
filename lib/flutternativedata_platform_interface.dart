@@ -4,13 +4,10 @@ import 'flutternativedata_method_channel.dart';
 abstract class FlutternativedataPlatform extends PlatformInterface {
   /// Constructs a FlutternativedataPlatform.
   FlutternativedataPlatform() : super(token: _token);
-
   static final Object _token = Object();
-
   static FlutternativedataPlatform _instance = MethodChannelFlutternativedata();
 
   /// The default instance of [FlutternativedataPlatform] to use.
-  ///
   /// Defaults to [MethodChannelFlutternativedata].
   static FlutternativedataPlatform get instance => _instance;
 
@@ -22,23 +19,9 @@ abstract class FlutternativedataPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
-  }
-
-  Future<num?> getBatteryLevel() {
-    throw UnimplementedError('getBatteryLevel() has not been implemented.');
-  }
-
-  Future<Map<Object?, Object?>?> getDeviceInfo() {
-    throw UnimplementedError('getDeviceInfo() has not been implemented.');
-  }
-
-  Future<Map<Object?, Object?>?> getMemoryInfo() {
-    throw UnimplementedError('getMemoryInfo() has not been implemented.');
-  }
-
-  Future<Map<Object?, Object?>?> getPackageInfo() {
-    throw UnimplementedError('getMemoryInfo() has not been implemented.');
-  }
+  Future<String?> getPlatformVersion();
+  Future<num?> getBatteryLevel();
+  Future<Map<Object?, Object?>?> getDeviceInfo();
+  Future<Map<Object?, Object?>?> getMemoryInfo();
+  Future<Map<Object?, Object?>?> getPackageInfo();
 }
