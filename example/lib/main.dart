@@ -17,9 +17,10 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
-  String platformVersion = 'Unknown';
-  num batteryLevel = 0;
+class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
+  late TabController tabController;
+  String? platformVersion = 'Unknown';
+  num? batteryLevel = 0;
   final _flutternativedataPlugin = Flutternativedata();
   FNDeviceInfo? fnDeviceInfo;
   FNMemoryInfo? fnMemoryInfo;
@@ -29,6 +30,11 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
+    initTabController();
+  }
+
+  initTabController() {
+    tabController = TabController(length: 5, vsync: this);
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -56,36 +62,68 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'FN Plugin example app',
-            style: TextStyle(fontWeight: FontWeight.w500),
-          ),
+          centerTitle: true,
+          //tabcontroller.index can be used to get the name of current index value of the tabview.
+          title: Text(tabController.index == 0 ? "Device" : "Others"),
+          bottom: TabBar(controller: tabController, tabs: [
+            Tab(
+              text: "Device",
+              icon: Icon(
+                Icons.home,
+                color: Colors.indigo.shade500,
+              ),
+            ),
+            Tab(
+              text: "Package Info",
+              icon: Icon(
+                Icons.person,
+                color: Colors.indigo.shade500,
+              ),
+            ),
+            Tab(
+              text: "Memory Info",
+              icon: Icon(
+                Icons.memory,
+                color: Colors.indigo.shade500,
+              ),
+            ),
+            Tab(
+              text: "Battery Level",
+              icon: Icon(
+                Icons.battery_0_bar_outlined,
+                color: Colors.indigo.shade500,
+              ),
+            ),
+            Tab(
+              text: "Platform Version",
+              icon: Icon(
+                Icons.place,
+                color: Colors.indigo.shade500,
+              ),
+            ),
+          ]),
         ),
-        body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+        body: TabBarView(
+          controller: tabController,
+          children: [
+            Column(
               children: [
-                const Text('DeviceInfo',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                    )),
+                const Text(
+                  'DeviceInfo',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 15,
+                  ),
+                ),
                 if (fnDeviceInfo != null)
                   ...fnDeviceInfo!.toMap().entries.map(
                         (entry) => Text('${entry.key}: ${entry.value}\n'),
                       ),
-                const Text('PlatformInfo',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                    )),
-                Text('Running on: $platformVersion\n',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                    )),
-                const Text('PackageInfo',
+              ],
+            ),
+            Column(
+              children: [
+                const Text('Package Info',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 15,
@@ -94,28 +132,46 @@ class _MyAppState extends State<MyApp> {
                   ...fnPackageInfo!.toMap().entries.map(
                         (entry) => Text('${entry.key}: ${entry.value}\n'),
                       ),
-                const Text('BatteryInfo',
+              ],
+            ),
+            if (fnMemoryInfo != null)
+              Column(
+                children: [
+                  const Text(
+                    'Memory Info',
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 15,
-                    )),
-                Text('Battery level: $batteryLevel\n',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                    )),
-                const Text('MemoryInfo',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                    )),
-                if (fnMemoryInfo != null)
+                    ),
+                  ),
                   ...fnMemoryInfo!.toMap().entries.map(
                         (entry) => Text('${entry.key}: ${entry.value}\n'),
                       ),
-              ],
-            ),
-          ),
+                ],
+              ),
+            if (batteryLevel != null)
+              Column(
+                children: [
+                  const Text('Battery Level',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                      )),
+                  Text(batteryLevel.toString())
+                ],
+              ),
+            if (platformVersion != null)
+              Column(
+                children: [
+                  const Text('Platform Version',
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 15,
+                      )),
+                  Text(platformVersion.toString())
+                ],
+              )
+          ],
         ),
       ),
     );

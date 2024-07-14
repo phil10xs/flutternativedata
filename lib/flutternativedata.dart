@@ -14,11 +14,17 @@ class Flutternativedata {
     this.showLogs = false,
   });
   Future<String?> getPlatformVersion() {
-    return FlutternativedataPlatform.instance.getPlatformVersion();
+    final platformVersion =
+        FlutternativedataPlatform.instance.getPlatformVersion();
+    if (showLogs) log('platformVersion $platformVersion');
+
+    return platformVersion;
   }
 
   Future<num?> getBatteryLevel() {
-    return FlutternativedataPlatform.instance.getBatteryLevel();
+    final flBattery = FlutternativedataPlatform.instance.getBatteryLevel();
+    if (showLogs) log('batteryLevel $flBattery');
+    return flBattery;
   }
 
   Future<FNDeviceInfo?> getDeviceInfo() async {
