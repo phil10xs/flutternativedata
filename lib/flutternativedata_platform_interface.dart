@@ -22,23 +22,9 @@ abstract class FlutternativedataPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
-  }
-
-  Future<num?> getBatteryLevel() {
-    throw UnimplementedError('getBatteryLevel() has not been implemented.');
-  }
-
-  Future<Map<Object?, Object?>?> getDeviceInfo() {
-    throw UnimplementedError('getDeviceInfo() has not been implemented.');
-  }
-
-  Future<Map<Object?, Object?>?> getMemoryInfo() {
-    throw UnimplementedError('getMemoryInfo() has not been implemented.');
-  }
-
-  Future<Map<Object?, Object?>?> getPackageInfo() {
-    throw UnimplementedError('getMemoryInfo() has not been implemented.');
-  }
+  Future<String?> getPlatformVersion();
+  Future<num?> getBatteryLevel();
+  Future<Map<Object?, Object?>?> getDeviceInfo();
+  Future<Map<Object?, Object?>?> getMemoryInfo();
+  Future<Map<Object?, Object?>?> getPackageInfo();
 }
