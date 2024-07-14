@@ -106,20 +106,22 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         body: TabBarView(
           controller: tabController,
           children: [
-            Column(
-              children: [
-                const Text(
-                  'DeviceInfo',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 15,
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  const Text(
+                    'DeviceInfo',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 15,
+                    ),
                   ),
-                ),
-                if (fnDeviceInfo != null)
-                  ...fnDeviceInfo!.toMap().entries.map(
-                        (entry) => Text('${entry.key}: ${entry.value}\n'),
-                      ),
-              ],
+                  if (fnDeviceInfo != null)
+                    ...fnDeviceInfo!.toMap().entries.map(
+                          (entry) => Text('${entry.key}: ${entry.value}\n'),
+                        ),
+                ],
+              ),
             ),
             Column(
               children: [
