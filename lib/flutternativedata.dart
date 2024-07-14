@@ -1,12 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
 import 'package:flutternativedata/entities/fn_device_info.dart';
 import 'package:flutternativedata/entities/fn_memory_info.dart';
 import 'package:flutternativedata/entities/fn_package_info.dart';
 import 'package:flutternativedata/util/primitive_ext.dart';
+
 import 'flutternativedata_platform_interface.dart';
 
 class Flutternativedata {
+  final bool showLogs;
+  Flutternativedata({
+    this.showLogs = false,
+  });
   Future<String?> getPlatformVersion() {
     return FlutternativedataPlatform.instance.getPlatformVersion();
   }
@@ -22,7 +28,7 @@ class Flutternativedata {
     if (deviceInfo != null && deviceInfo.isNotEmpty) {
       fnDeviceInfo = FNDeviceInfo.fromJson(deviceInfo.convertToDynamicMap());
     }
-    log(' fnDeviceInfo $deviceInfo');
+    if (showLogs) log('fnDeviceInfo $deviceInfo');
     return fnDeviceInfo;
   }
 
@@ -33,7 +39,7 @@ class Flutternativedata {
     if (memoryInfo != null && memoryInfo.isNotEmpty) {
       fnMemoryInfo = FNMemoryInfo.fromJson(memoryInfo.convertToDynamicMap());
     }
-    log('fnMemoryInfo $memoryInfo');
+    if (showLogs) log('fnMemoryInfo $memoryInfo');
     return fnMemoryInfo;
   }
 
@@ -44,7 +50,7 @@ class Flutternativedata {
     if (packageInfo != null && packageInfo.isNotEmpty) {
       fnPackageInfo = FNPackageInfo.fromJson(packageInfo.convertToDynamicMap());
     }
-    log('fnPackageInfo $packageInfo');
+    if (showLogs) log('fnPackageInfo $packageInfo');
     return fnPackageInfo;
   }
 }
