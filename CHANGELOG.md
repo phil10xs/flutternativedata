@@ -1,3 +1,3 @@
-## 1.0.0
+## 1.0.1
 
-* TODO: plugin now open source for collaboration, PRs, Issues and Support.
+* TODO: Re-done Example app. Added logger options.
