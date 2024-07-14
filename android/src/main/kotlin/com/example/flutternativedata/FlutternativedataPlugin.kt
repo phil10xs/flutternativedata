@@ -8,6 +8,10 @@ import android.app.ActivityManager
 import java.util.Locale
 import java.util.TimeZone
 import android.provider.Settings
+import android.telephony.TelephonyManager
+import androidx.core.app.ActivityCompat
+import android.net.wifi.WifiManager
+import android.os.Build
 
 import androidx.annotation.NonNull
 
@@ -98,6 +102,56 @@ class FlutternativedataPlugin: FlutterPlugin, MethodCallHandler {
     return infoMap
 }
 
+fun getSecondIMEI(context: Context): String? {
+    val telephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    return if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            telephonyManager.getImei(1) // 1 for the second SIM slot
+        } else {
+            null
+        }
+    } else {
+        null
+    }
+}
+
+fun getMacAddress(context: Context): String? {
+    val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        try {
+            val all = Collections.list(NetworkInterface.getNetworkInterfaces())
+            for (nif in all) {
+                if (nif.name.equals("wlan0", ignoreCase = true)) {
+                    val macBytes = nif.hardwareAddress ?: return null
+                    val macAddress = StringBuilder()
+                    for (b in macBytes) {
+                        macAddress.append(String.format("%02X:", b))
+                    }
+                    if (macAddress.isNotEmpty()) {
+                        macAddress.deleteCharAt(macAddress.length - 1)
+                    }
+                    return macAddress.toString()
+                }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        null
+    } else {
+        val wifiInfo = wifiManager.connectionInfo
+        wifiInfo.macAddress
+    }
+}
+
+
+fun getDeviceSerialNumber(): String {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        Build.getSerial()
+    } else {
+        Build.SERIAL
+    }
+}
+
 
 private fun getDeviceInfo(): Map<String, Any> {
     val deviceInfoMap = mutableMapOf<String, Any>()
@@ -125,6 +179,9 @@ private fun getDeviceInfo(): Map<String, Any> {
     deviceInfoMap["deviceTimeZone"] = TimeZone.getDefault().id // Added
     deviceInfoMap["systemVersion"] = Build.VERSION.RELEASE // Updated
     deviceInfoMap["deviceIMEI"] = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) // Updated
+    deviceInfoMap["secondIMEI"] = getSecondIMEI(context)
+    deviceInfoMap["serialNumber"] = getDeviceSerialNumber()
+    deviceInfoMap["macAddress"] = getMacAddress(context)
     deviceInfoMap["identifierForVendor"] = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) // Updated
     return deviceInfoMap
 }

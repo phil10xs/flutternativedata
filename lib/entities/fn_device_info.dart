@@ -16,8 +16,14 @@ class FNDeviceInfo {
   final String? deviceOSVersion;
   final String? deviceSDKVersion;
   final String? deviceID;
+  final String? secondIMEI;
+  final String? macAddress;
+  final String? serialNumber;
 
   FNDeviceInfo({
+    required this.macAddress,
+    required this.serialNumber,
+    required this.secondIMEI,
     required this.deviceType,
     required this.deviceLanguage,
     required this.identifierForVendor,
@@ -43,6 +49,9 @@ class FNDeviceInfo {
       deviceLanguage: json['deviceLanguage'],
       identifierForVendor: json['identifierForVendor'],
       deviceIMEI: json['deviceIMEI'],
+      secondIMEI: json["secondIMEI"],
+      macAddress: json['macAddress'],
+      serialNumber: json['serialNumber'],
       systemVersion: json['systemVersion'],
       deviceCountry: json['deviceCountry'],
       deviceTimeZone: json['deviceTimeZone'],
@@ -65,6 +74,9 @@ class FNDeviceInfo {
       'deviceLanguage': deviceLanguage,
       'identifierForVendor': identifierForVendor,
       'deviceIMEI': deviceIMEI,
+      'secondIMEI': secondIMEI,
+      'macAddress': macAddress,
+      'serialNumber': serialNumber,
       'systemVersion': systemVersion,
       'deviceCountry': deviceCountry,
       'deviceTimeZone': deviceTimeZone,
