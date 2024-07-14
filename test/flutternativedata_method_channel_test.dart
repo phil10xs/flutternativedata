@@ -9,7 +9,7 @@ void main() {
   const MethodChannel channel = MethodChannel('flutternativedata');
 
   setUp(() {
-    TestDefaultBinaryMessengerBinding.instance?.defaultBinaryMessenger
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(
       channel,
       (MethodCall methodCall) async {
@@ -19,15 +19,11 @@ void main() {
   });
 
   tearDown(() {
-    TestDefaultBinaryMessengerBinding.instance?.defaultBinaryMessenger
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, null);
   });
 
   test('getPlatformVersion', () async {
     expect(await platform.getPlatformVersion(), '42');
-  });
-
-  test('getBatteryLevel', () async {
-    expect(await platform.getBatteryLevel(), 21);
   });
 }

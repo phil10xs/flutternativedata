@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   late TabController tabController;
   String? platformVersion = 'Unknown';
   num? batteryLevel = 0;
-  final _flutternativedataPlugin = Flutternativedata();
+  final _flutternativedataPlugin = Flutternativedata(showLogs: true);
   FNDeviceInfo? fnDeviceInfo;
   FNMemoryInfo? fnMemoryInfo;
   FNPackageInfo? fnPackageInfo;

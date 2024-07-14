@@ -11,7 +11,8 @@ import android.provider.Settings
 import android.telephony.TelephonyManager
 import androidx.core.app.ActivityCompat
 import android.net.wifi.WifiManager
-import android.os.Build
+import java.net.NetworkInterface
+import java.util.Collections
 
 import androidx.annotation.NonNull
 
@@ -179,9 +180,9 @@ private fun getDeviceInfo(): Map<String, Any> {
     deviceInfoMap["deviceTimeZone"] = TimeZone.getDefault().id // Added
     deviceInfoMap["systemVersion"] = Build.VERSION.RELEASE // Updated
     deviceInfoMap["deviceIMEI"] = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) // Updated
-    deviceInfoMap["secondIMEI"] = getSecondIMEI(context)
+    deviceInfoMap["secondIMEI"] = getSecondIMEI(context) ?: "Unavailable"
     deviceInfoMap["serialNumber"] = getDeviceSerialNumber()
-    deviceInfoMap["macAddress"] = getMacAddress(context)
+    deviceInfoMap["macAddress"] = getMacAddress(context) ?: "Unavailable"
     deviceInfoMap["identifierForVendor"] = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID) // Updated
     return deviceInfoMap
 }
