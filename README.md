@@ -145,10 +145,14 @@ class _MyAppState extends State<MyApp> {
 }
 ```
 
+
+## Contributors
+<a href="https://github.com/phil10xs/flutternativedata/graphs"><img src="https://contrib.rocks/image?repo=phil10xs/flutternativedata" width="128" height="128" /></a>
+
 ## Usage
 The following section contains usage information that goes beyond what is included in the documentation in order to give a more elaborate overview of the plugin.
 
-This is not complete as of now. You can contribute to this section by [opening a pull request](https://github.com/flutter/packages/pulls).
+This is not complete as of now. You can contribute to this section by [opening a pull request](https://pub.dev/packages/flutternativedata).
 
 
 
